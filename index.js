@@ -1,31 +1,30 @@
-const canvas = d3.select('.canvas');
+const svg = d3.select('svg');
 
-const svg = canvas.append('svg').attr('width', 600).attr('height', 600);
+d3.json('menu.json').then((data) => {
+  const y = d3.scaleLinear().domain([0, 1000]).range([0, 500]);
+  const x = d3
+    .scaleBand()
+    .domain(data.map((item) => item.name))
+    .range([0, 500]);
 
-const group = svg.append('g').attr('transform', translate(50, 100));
+  console.log(data.map((item) => item.name));
+  console.log(x('cutlets'), x('filet'));
 
-group
-  .append('rect')
-  .attr('width', 200)
-  .attr('height', 100)
-  .attr('fill', 'blue')
-  .attr('x', 20)
-  .attr('y', 20);
+  console.log(y(400));
 
-group.append('circle').attr('r', 50).attr('cx', 300).attr('cy', 70).attr('fill', 'pink');
+  const rects = svg.selectAll('rect').data(data);
 
-group
-  .append('text')
-  .attr('x', 20)
-  .attr('y', 200)
-  .attr('color', 'red')
-  .text('Hello, ninjas')
-  .style('font-family', 'arial');
+  rects
+    .attr('width', x.bandwidth)
+    .attr('height', (d) => y(d.orders))
+    .attr('fill', 'orange')
+    .attr('x', (d, i) => (i + 1) * 70);
 
-group
-  .append('line')
-  .attr('x1', 370)
-  .attr('x2', 400)
-  .attr('y1', 20)
-  .attr('y2', 120)
-  .attr('stroke', 'red');
+  rects
+    .enter()
+    .append('rect')
+    .attr('width', x.bandwidth)
+    .attr('height', (d) => y(d.orders))
+    .attr('fill', 'orange')
+    .attr('x', (d, i) => (i + 1) * 70);
+});

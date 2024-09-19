@@ -14,5 +14,9 @@
   {
     "name": "tomahawk",
     "orders": 900
+  },
+  {
+    "name": "Golden Tomahawk",
+    "orders": 1300
   }
 ]

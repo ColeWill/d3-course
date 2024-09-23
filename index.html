@@ -9,6 +9,27 @@
   <body>
     <div class="canvas"></div>
 
+    <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-firestore-compat.js"></script>
+    <script>
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: 'AIzaSyB2QfIKP1pFU3fmoJjtuFy1Emk97ZJpLNs',
+        authDomain: 'udemy-d3-firebase-d04c3.firebaseapp.com',
+        projectId: 'udemy-d3-firebase-d04c3',
+        storageBucket: 'udemy-d3-firebase-d04c3.appspot.com',
+        messagingSenderId: '520715423527',
+        appId: '1:520715423527:web:b873c8caf924360759a302',
+        measurementId: 'G-3FDRJBWJR5'
+      };
+      // Initialize Firebase
+      const firebaseApp = firebase.initializeApp(firebaseConfig);
+      const db = firebaseApp.firestore();
+      db.settings({ timestampsInSnapshots: true });
+    </script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"
       integrity="sha512-vc58qvvBdrDR4etbxMdlTt4GBQk1qjvyORR2nrsPsFPyrs+/u5c3+1Ct6upOgdZoIl7eq6k3a1UPDSNAQi/32A=="

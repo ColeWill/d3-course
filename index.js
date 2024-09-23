@@ -18,50 +18,55 @@ const yAxisGroup = graph.append('g');
 db.collection('dishes')
   .get()
   .then((res) => {
-    console.log('res', res);
-    // const min = d3.min(data, (d) => d.orders);
-    // const max = d3.max(data, (d) => d.orders);
-    // const extent = d3.extent(data, (d) => d.orders);
+    let data = [];
 
-    // const y = d3.scaleLinear().domain([0, max]).range([graphHeight, 0]);
-    // const x = d3
-    //   .scaleBand()
-    //   .domain(data.map((item) => item.name))
-    //   .range([0, 500])
-    //   .paddingInner(0.2)
-    //   .paddingOuter(0.2);
+    res.docs.forEach((doc) => {
+      data.push(doc.data());
+    });
 
-    // const rects = graph.selectAll('rect').data(data);
+    const min = d3.min(data, (d) => d.orders);
+    const max = d3.max(data, (d) => d.orders);
+    const extent = d3.extent(data, (d) => d.orders);
 
-    // rects
-    //   .attr('width', x.bandwidth)
-    //   .attr('height', (d) => graphHeight - y(d.orders))
-    //   .attr('fill', 'orange')
-    //   .attr('x', (d) => x(d.name))
-    //   .attr('y', (d) => y(d.orders));
+    const y = d3.scaleLinear().domain([0, max]).range([graphHeight, 0]);
+    const x = d3
+      .scaleBand()
+      .domain(data.map((item) => item.name))
+      .range([0, 500])
+      .paddingInner(0.2)
+      .paddingOuter(0.2);
 
-    // rects
-    //   .enter()
-    //   .append('rect')
-    //   .attr('width', x.bandwidth)
-    //   .attr('height', (d) => graphHeight - y(d.orders))
-    //   .attr('fill', 'orange')
-    //   .attr('x', (d) => x(d.name))
-    //   .attr('y', (d) => y(d.orders));
+    const rects = graph.selectAll('rect').data(data);
 
-    // // create and call the axes
-    // const xAxis = d3.axisBottom(x);
-    // const yAxis = d3
-    //   .axisLeft(y)
-    //   .ticks(4)
-    //   .tickFormat((d) => d + ' orders');
+    rects
+      .attr('width', x.bandwidth)
+      .attr('height', (d) => graphHeight - y(d.orders))
+      .attr('fill', 'orange')
+      .attr('x', (d) => x(d.name))
+      .attr('y', (d) => y(d.orders));
 
-    // xAxisGroup.call(xAxis);
-    // yAxisGroup.call(yAxis);
+    rects
+      .enter()
+      .append('rect')
+      .attr('width', x.bandwidth)
+      .attr('height', (d) => graphHeight - y(d.orders))
+      .attr('fill', 'orange')
+      .attr('x', (d) => x(d.name))
+      .attr('y', (d) => y(d.orders));
 
-    // xAxisGroup
-    //   .selectAll('text')
-    //   .attr('transform', 'rotate(-40)')
-    //   .attr('text-anchor', 'end')
-    //   .attr('fill', 'orange');
+    // create and call the axes
+    const xAxis = d3.axisBottom(x);
+    const yAxis = d3
+      .axisLeft(y)
+      .ticks(4)
+      .tickFormat((d) => d + ' orders');
+
+    xAxisGroup.call(xAxis);
+    yAxisGroup.call(yAxis);
+
+    xAxisGroup
+      .selectAll('text')
+      .attr('transform', 'rotate(-40)')
+      .attr('text-anchor', 'end')
+      .attr('fill', 'orange');
   });

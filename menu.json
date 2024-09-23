@@ -1,0 +1,22 @@
+[
+  {
+    "name": "ribeye",
+    "orders": 200
+  },
+  {
+    "name": "cutlets",
+    "orders": 600
+  },
+  {
+    "name": "filet",
+    "orders": 300
+  },
+  {
+    "name": "tomahawk",
+    "orders": 900
+  },
+  {
+    "name": "Golden Tomahawk",
+    "orders": 1300
+  }
+]
